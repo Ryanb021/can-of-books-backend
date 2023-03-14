@@ -44,7 +44,7 @@ app.get('/books', getBooks);
 async function getBooks(request, response, next) {
   try {
     let results = await Books.find({});
-    res.status(200).send(results);
+    response.status(200).send(results);
 
   } catch(error) {
     next(error);
