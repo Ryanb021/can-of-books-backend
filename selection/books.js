@@ -19,7 +19,7 @@ const booksSchema = new Schema({
   status: {type: String, required: true},
 });
 
-// define selections, this is the fucntionality of how to interact w/database
+// define selections, this is the functionality of how to interact w/database
 const BooksSelections = mongoose.model('Books', booksSchema);
 // the server.js will have access to the functionality of our database
 module.exports = BooksSelections;

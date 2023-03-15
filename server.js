@@ -24,7 +24,7 @@ const app = express();
 
 // middleware
 app.use(cors());
-// we must have this to recieve JSON data from a request
+// we must have this to receive JSON data from a request
 app.use(express.json());
 
 
@@ -45,7 +45,9 @@ app.get('/', (request, response) => {
 app.get('/books', getBooks);
 // HANDLER
 app.post('/books', postBooks);
+// : is pass parameter id is variable
 app.delete('/books/:id', deleteBooks);
+app.put('/books/:id', putBooks);
 
 async function getBooks(request, response, next) {
   try {
@@ -56,12 +58,12 @@ async function getBooks(request, response, next) {
     next(error);
   }
 }
-
+// Express
 async function postBooks(request, response, next) {
   console.log(request.body);
   try{
 
-  // we want to add books to our database
+  // we want to add books to our database, Books is model from Mongoose
   let createdBooks = await Books.create(request.body)
   response.status(200).send(createdBooks);
   } catch(error) {
@@ -81,6 +83,21 @@ async function deleteBooks(request, response, next) {
   }
 }
 
+async function putBooks(request, response, next) {
+  try {
+    let id = request.params.id;
+    let updatedBooks = request.body;
+
+    // findByIdAndUpdate method takes in 3 arguments:
+    // 1st is the id, 2nd is updated data object, 3rd is options object
+    let updatedBooksFromDatabase = await Books.findByIdAndUpdate(id, updatedBooks, { new: true, overwrite: true });
+    response.status(200).send(updatedBooksFromDatabase);
+
+  } catch(error) {
+    next(error);
+  }
+}
+// * is WildCard!
 app.get('*', (request, response) => {
   response.status(404).send('Not available');
 });
