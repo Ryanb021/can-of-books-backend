@@ -24,6 +24,8 @@ const app = express();
 
 // middleware
 app.use(cors());
+// we must have this to recieve JSON data from a request
+app.use(express.json());
 
 
 
@@ -41,11 +43,39 @@ app.get('/', (request, response) => {
 });
 
 app.get('/books', getBooks);
+// HANDLER
+app.post('/books', postBooks);
+app.delete('/books/:id', deleteBooks);
+
 async function getBooks(request, response, next) {
   try {
     let results = await Books.find({});
     response.status(200).send(results);
 
+  } catch(error) {
+    next(error);
+  }
+}
+
+async function postBooks(request, response, next) {
+  console.log(request.body);
+  try{
+
+  // we want to add books to our database
+  let createdBooks = await Books.create(request.body)
+  response.status(200).send(createdBooks);
+  } catch(error) {
+    next(error);
+  }
+}
+
+// Function  for delete Handler
+async function deleteBooks(request, response, next) {
+  try {
+    let id = request.params.id;
+    // do not expect anything to be returned by findByIdAndDelete
+    await Books.findByIdAndDelete(id);
+    response.status(200).send('Confirmed Deletion!');
   } catch(error) {
     next(error);
   }
