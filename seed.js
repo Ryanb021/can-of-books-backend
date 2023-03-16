@@ -22,7 +22,7 @@ let aBook = new Schema ({
 await Books.create({
   title: 'The Dark Knight',
   description: 'Justice and Vengeance! Hero that we deserve!',
-  status: 'Out and about at night breaking bones and spirit!'
+  status: 'true'
 });
 
 console.log('Batman is The Dark Knight!');
@@ -30,7 +30,7 @@ console.log('Batman is The Dark Knight!');
 await Books.create({
   title: 'S is for Hope',
   description: 'A God among men.',
-  status: 'Clark Kent as man, Superman as a God.'
+  status: 'true'
 });
 
 console.log('Superman stands for Hope.');
@@ -38,7 +38,7 @@ console.log('Superman stands for Hope.');
 await Books.create({
   title: 'Killing Joke',
   description: 'Joker causing death and chaos!',
-  status: 'He is the most dangerous enemy of Batman.'
+  status: 'true'
 });
 
 console.log('Why so serious?');
