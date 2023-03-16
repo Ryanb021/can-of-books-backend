@@ -16,7 +16,7 @@ const { Schema } = mongoose;
 const booksSchema = new Schema({
   title: {type: String, required: true},
   description: {type: String, required: true},
-  status: {type: String, required: true},
+  status: {type: Boolean, required: true},
 });
 
 // define selections, this is the functionality of how to interact w/database
