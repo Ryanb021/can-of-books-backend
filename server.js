@@ -19,6 +19,8 @@ db.once('open', function () {
 // connect mongoose to MongoDB
 mongoose.connect(process.env.DB_URL);
 
+const verifyUser = require('./auth');
+
 // USE implement express
 const app = express();
 
@@ -36,6 +38,16 @@ const PORT = process.env.PORT || 3001;
 //  response.send('test request received')
 
 //});
+
+// verifyUser(request, async (error, user) => {
+//   if (error) {
+//     console.error(error);
+//     response.send('invalid token');
+
+//   } else {
+
+//   }
+// })
 
 // ROUTES
 app.get('/', (request, response) => {
