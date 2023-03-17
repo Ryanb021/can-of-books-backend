@@ -1,5 +1,6 @@
 'use strict'
 
+const { urlencoded } = require('express');
 /*
 let aBook = new Schema ({
   title: 'The Dark Knight',
@@ -15,6 +16,7 @@ const { Schema } = mongoose;
 // this is Schema, rules allowed in database
 const booksSchema = new Schema({
   title: {type: String, required: true},
+  //img: {type: String, format: data-url},
   description: {type: String, required: true},
   status: {type: Boolean, required: true},
 });
