@@ -31,7 +31,7 @@ app.use(express.json());
 
 
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 //app.get('/test', (request, response) => {
 
@@ -62,23 +62,32 @@ app.delete('/books/:id', deleteBooks);
 app.put('/books/:id', putBooks);
 
 async function getBooks(request, response, next) {
-  try {
-    let results = await Books.find({});
-    response.status(200).send(results);
+  // verifyUser(request, async (error, user) => {
+  //   if (error) {
+  //     console.error(error);
+  //     response.send('invalid token');
 
-  } catch(error) {
-    next(error);
-  }
-}
+  //   } else {
+
+      try {
+        let results = await Books.find({});
+        response.status(200).send(results);
+
+      } catch (error) {
+        next(error);
+      }
+    }
+//   });
+// };
 // Express
 async function postBooks(request, response, next) {
   console.log(request.body);
-  try{
+  try {
 
-  // we want to add books to our database, Books is model from Mongoose
-  let createdBooks = await Books.create(request.body)
-  response.status(200).send(createdBooks);
-  } catch(error) {
+    // we want to add books to our database, Books is model from Mongoose
+    let createdBooks = await Books.create(request.body)
+    response.status(200).send(createdBooks);
+  } catch (error) {
     next(error);
   }
 }
@@ -90,7 +99,7 @@ async function deleteBooks(request, response, next) {
     // do not expect anything to be returned by findByIdAndDelete
     await Books.findByIdAndDelete(id);
     response.status(200).send('Confirmed Deletion!');
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
 }
@@ -105,7 +114,7 @@ async function putBooks(request, response, next) {
     let updatedBooksFromDatabase = await Books.findByIdAndUpdate(id, updatedBooks, { new: true, overwrite: true });
     response.status(200).send(updatedBooksFromDatabase);
 
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
 }
@@ -117,6 +126,7 @@ app.get('*', (request, response) => {
 // ERROR
 app.use((error, request, response, next) => {
   response.status(500).send(error.message);
+
 });
 
 // LISTEN
