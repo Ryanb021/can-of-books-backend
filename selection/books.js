@@ -16,7 +16,7 @@ const { Schema } = mongoose;
 // this is Schema, rules allowed in database
 const booksSchema = new Schema({
   title: {type: String, required: true},
-  image_url: {type: String, required: true},
+  //image_url: {type: String, required: true},
   description: {type: String, required: true},
   status: {type: Boolean, required: true},
 });
