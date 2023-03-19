@@ -69,14 +69,14 @@ async function getBooks(request, response, next) {
 
   //   } else {
 
-      try {
-        let results = await Books.find({});
-        response.status(200).send(results);
+  try {
+    let results = await Books.find({});
+    response.status(200).send(results);
 
-      } catch (error) {
-        next(error);
-      }
-    }
+  } catch (error) {
+    next(error);
+  }
+}
 //   });
 // };
 // Express
@@ -105,19 +105,28 @@ async function deleteBooks(request, response, next) {
 }
 
 async function putBooks(request, response, next) {
-  try {
-    let id = request.params.id;
-    let updatedBooks = request.body;
+  verifyUser(request, async (error, user) => {
+    if (error) {
+      console.error(error);
+      response.send('invalid token');
 
-    // findByIdAndUpdate method takes in 3 arguments:
-    // 1st is the id, 2nd is updated data object, 3rd is options object
-    let updatedBooksFromDatabase = await Books.findByIdAndUpdate(id, updatedBooks, { new: true, overwrite: true });
-    response.status(200).send(updatedBooksFromDatabase);
+    } else {
+      try {
+        let id = request.params.id;
+        let updatedBooks = request.body;
 
-  } catch (error) {
-    next(error);
-  }
-}
+        // findByIdAndUpdate method takes in 3 arguments:
+        // 1st is the id, 2nd is updated data object, 3rd is options object
+        let updatedBooksFromDatabase = await Books.findByIdAndUpdate(id, updatedBooks, { new: true, overwrite: true });
+        response.status(200).send(updatedBooksFromDatabase);
+
+      } catch (error) {
+        next(error);
+      }
+    }
+
+  });
+};
 // * is WildCard!
 app.get('*', (request, response) => {
   response.status(404).send('Not available');
